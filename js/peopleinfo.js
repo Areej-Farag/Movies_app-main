@@ -1,13 +1,13 @@
 let elementId = window.location.search.split("=")[1];
-const apiKey = "1d6f069235ee2ec50c1a4d2102a76a02";
+const apiKey = "210b492d626133d52f8b057ceedfc6b4";
 let language;
 const lang = document.getElementById("lang");
 let peopleDetailsURl = `https://api.themoviedb.org/3/person/${elementId}?language=${lang.value}&api_key=${apiKey}`;
 const Cast = document.getElementById("cast-list");
 const movieContainer = document.getElementById("movies-details");
-const knownForUrl = `https://api.themoviedb.org/3/person/${elementId}/combined_credits?api_key=1d6f069235ee2ec50c1a4d2102a76a02
+const knownForUrl = `https://api.themoviedb.org/3/person/${elementId}/combined_credits?api_key=${apiKey}
 `;
-
+//language handling
 lang.addEventListener("change", () => {
   if (lang.value === "en-US") {
     language = "en-US";
@@ -21,6 +21,7 @@ lang.addEventListener("change", () => {
     drawPerson(people);
   });
 });
+//fetch data
 async function fetchData(URL) {
   const response = await fetch(URL);
   const data = await response.json();
@@ -29,10 +30,12 @@ async function fetchData(URL) {
     return data;
   }
 }
+//fetching actor info and drawing them
 let person = fetchData(peopleDetailsURl).then((people) => {
   drawPerson(people);
 });
-async function drawPerson(item) {
+//drawing actors function
+function drawPerson(item) {
   if (item.gender === 1) {
     item.gender = "Female";
   } else if (item.gender === 2) {
@@ -63,18 +66,20 @@ async function drawPerson(item) {
   movieContainer.style.backgroundImage = `url(https://image.tmdb.org/t/p/w500/${item.profile_path})`;
   movieContainer.style.backgroundSize = "cover";
 }
-fetchData(knownForUrl)
-  .then((cast) => cast.cast)
-  .then((castMembers) => {
-    drawKnownFor(castMembers);
+//fetching actor Works and drawing them
+fetchData(knownForUrl).then((cast) => {
+  let castArr = cast.cast;
+  castArr.map((movie) => {
+    drawKnownFor(movie);
   });
+});
 
-function drawKnownFor(items) {
-  items.map((item) => {
-    const actorCard = document.createElement("a");
-    actorCard.setAttribute("class", "actorCard");
-    actorCard.setAttribute("href", `movieDetails.html?id=${item.id}`);
-    actorCard.innerHTML = `
+//drawing actor's works
+function drawKnownFor(item) {
+  const actorCard = document.createElement("a");
+  actorCard.setAttribute("class", "actorCard");
+  actorCard.setAttribute("href", `movieDetails.html?id=${item.id}`);
+  actorCard.innerHTML = `
                       <img src="https://image.tmdb.org/t/p/w500/${
                         item.poster_path
                       }" alt="${item.title}">
@@ -82,10 +87,9 @@ function drawKnownFor(items) {
                   <div class="itemInfo">
                       <p class="title">${item.title || item.name}</p>
                       </div>  `;
-    Cast.appendChild(actorCard);
-  });
+  Cast.appendChild(actorCard);
 }
-
+//Check if the user is logged in
 if (localStorage.getItem("email") && localStorage.getItem("password")) {
   let Fchar = localStorage.getItem("name").split(" ")[0].charAt(0);
   let Schar = localStorage.getItem("name").split(" ")[1].charAt(0);

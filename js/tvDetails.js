@@ -1,14 +1,14 @@
 let elementId = window.location.search.split("=")[1];
 let language;
 const lang = document.getElementById("lang");
-const apiKey = "1d6f069235ee2ec50c1a4d2102a76a02";
+const apiKey = "210b492d626133d52f8b057ceedfc6b4";
 const Cast = document.getElementById("cast-list");
 const movieContainer = document.getElementById("movies-details");
 let TVDetailsURl = `https://api.themoviedb.org/3/tv/${elementId}/credits?api_key=${apiKey}`;
 let TvIdURL = `https://api.themoviedb.org/3/tv/${elementId}?language=${lang.value}&api_key=${apiKey}`;
 const videosURL = `https://api.themoviedb.org/3/tv/${elementId}/videos?api_key=${apiKey}`;
 const CastContainer = document.getElementById("CastContainer");
-
+//language handling
 lang.addEventListener("change", () => {
   if (lang.value === "en-US") {
     language = "en-US";
@@ -22,6 +22,7 @@ lang.addEventListener("change", () => {
     drawFullMovie(movies);
   });
 });
+//fetch data
 async function fetchData(URL) {
   const response = await fetch(URL);
   const data = await response.json();
@@ -30,6 +31,7 @@ async function fetchData(URL) {
     return data;
   }
 }
+//fetch data and display them
 fetchData(TvIdURL).then((series) => drawFullMovie(series));
 fetchData(TVDetailsURl)
   .then((cast) => {
@@ -44,7 +46,7 @@ fetchData(TVDetailsURl)
     }
     drawCast(castMembers);
   });
-
+//fetch trailer
 fetchData(videosURL).then((video) => {
   if (video.results.length > 0) {
     let VideoLink = `https://www.youtube.com/watch?v=${video.results[0].key}`;
@@ -53,8 +55,6 @@ fetchData(videosURL).then((video) => {
       "embed/"
     );
     document.getElementById("trailer").addEventListener("click", () => {
-      console.log("clicked");
-
       document.getElementById("trailerContainer")?.classList.remove("hidden");
     });
     document.getElementById("close").addEventListener("click", () => {
@@ -64,10 +64,11 @@ fetchData(videosURL).then((video) => {
     console.log("errr");
   }
 });
+//draw TV details
 function drawFullMovie(item) {
-  let runtimeHR = parseInt(+item.runtime/60);
-  let runtimeMin= Number(item.runtime % 60)
-
+  console.log(item);
+  let NumberOfSeasons = item.number_of_seasons;
+  let NumberOfEpisodes = item.number_of_episodes;
   movieContainer.innerHTML = `
                  <div class="itemContainer">
                             <div class="itemImg">
@@ -83,7 +84,7 @@ function drawFullMovie(item) {
                               item.first_air_date || item.release_date
                             }</p>
                             <ul class="genres" id="genres"></ul>
-                            <p class="runtime">${runtimeHR}Hr ${runtimeMin}M</p>
+                            <p class="runtime">${NumberOfSeasons}S , ${NumberOfEpisodes}EP</p>
                             </div>
                             </div>
                             <div class="itemicons">
@@ -116,8 +117,8 @@ function drawFullMovie(item) {
                         </div>
                 </div> 
         `;
-                
-  const geners= document.getElementById('genres');
+
+  const geners = document.getElementById("genres");
   item.genres.map((genre) => {
     const genreCard = document.createElement("li");
     genreCard.innerHTML = `${genre.name} ,`;
@@ -126,6 +127,7 @@ function drawFullMovie(item) {
   movieContainer.style.backgroundImage = `url(https://image.tmdb.org/t/p/w500/${item.poster_path})`;
   movieContainer.style.backgroundSize = "cover";
 }
+//draw TV cast
 async function drawCast(items) {
   items?.map((item) => {
     const actorCard = document.createElement("a");
@@ -142,9 +144,10 @@ async function drawCast(items) {
     Cast?.appendChild(actorCard);
   });
 }
-if(localStorage.getItem('email') && localStorage.getItem('password')) {
-  let Fchar =localStorage.getItem('name').split(' ')[0].charAt(0);
-  let Schar =localStorage.getItem('name').split(' ')[1].charAt(0);
-  document.getElementById('signin').innerHTML=`${Fchar}${Schar}`;
-  document.getElementById('signin').setAttribute("class",'borderdPerson');
+//Check if the user is logged in
+if (localStorage.getItem("email") && localStorage.getItem("password")) {
+  let Fchar = localStorage.getItem("name").split(" ")[0].charAt(0);
+  let Schar = localStorage.getItem("name").split(" ")[1].charAt(0);
+  document.getElementById("signin").innerHTML = `${Fchar}${Schar}`;
+  document.getElementById("signin").setAttribute("class", "borderdPerson");
 }

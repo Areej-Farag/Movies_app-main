@@ -1,4 +1,4 @@
-const apiKey = "1d6f069235ee2ec50c1a4d2102a76a02";
+const apiKey = "210b492d626133d52f8b057ceedfc6b4";
 let language;
 const lang = document.getElementById("lang");
 const MoviesGenersURL = `https://api.themoviedb.org/3/genre/movie/list?language=${lang.value}&api_key=${apiKey}`;
@@ -9,7 +9,7 @@ let elementId = window.location.search.split("=")[1];
 let MovieDetailsURl = `https://api.themoviedb.org/3/movie/${elementId}/credits?api_key=${apiKey}`;
 let movieIDURL = `https://api.themoviedb.org/3/movie/${elementId}?language=${lang.value}&api_key=${apiKey}`;
 const videosURL = `https://api.themoviedb.org/3/movie/${elementId}/videos?api_key=${apiKey}`;
-
+//language handling
 lang.addEventListener("change", () => {
   if (lang.value === "en-US") {
     language = "en-US";
@@ -25,49 +25,48 @@ lang.addEventListener("change", () => {
     drawFullMovie(movies);
   });
 });
+//fetch data
 async function fetchData(URL) {
   const response = await fetch(URL);
   const data = await response.json();
-  // console.log(data);
   if (data) {
     return data;
   }
 }
-
+//fetch movie and display it
 fetchData(movieIDURL).then((movies) => {
-  console.log(movies);
-  
   drawFullMovie(movies);
 });
-fetchData(videosURL).then((video)=> {
-  if(video.results.length>0){
-    let VideoLink = `https://www.youtube.com/watch?v=${video.results[0].key}`
-    document.getElementById("trailerFrame").src = VideoLink.replace("watch?v=", "embed/");
-    document.getElementById('trailer').addEventListener('click', () => {
+//fetch trailer
+fetchData(videosURL).then((video) => {
+  if (video.results.length > 0) {
+    let VideoLink = `https://www.youtube.com/watch?v=${video.results[0].key}`;
+    document.getElementById("trailerFrame").src = VideoLink.replace(
+      "watch?v=",
+      "embed/"
+    );
+    document.getElementById("trailer").addEventListener("click", () => {
       console.log("clicked");
-      
-      document.getElementById('trailerContainer')?.classList.remove('hidden');
-    });
-    document.getElementById('close').addEventListener('click', () => {
-      document.getElementById('trailerContainer')?.classList.add('hidden');
-    });
-  }
-  else{
-    alert("No trailer available");
-    
-  }
 
-  });
+      document.getElementById("trailerContainer")?.classList.remove("hidden");
+    });
+    document.getElementById("close").addEventListener("click", () => {
+      document.getElementById("trailerContainer")?.classList.add("hidden");
+    });
+  } else {
+    alert("No trailer available");
+  }
+});
+//fetch cast and drawing them
 fetchData(MovieDetailsURl)
   .then((cast) => cast.cast)
   .then((castMembers) => {
     drawCast(castMembers);
   });
-
+//draw full movie
 function drawFullMovie(item) {
-  let runtimeHR = parseInt(+item.runtime/60);
-  let runtimeMin= Number(item.runtime % 60)
-
+  let runtimeHR = parseInt(+item.runtime / 60);
+  let runtimeMin = Number(item.runtime % 60);
   movieContainer.innerHTML = `
                  <div class="itemContainer">
                             <div class="itemImg">
@@ -116,8 +115,8 @@ function drawFullMovie(item) {
                         </div>
                 </div> 
         `;
-                
-  const geners= document.getElementById('genres');
+
+  const geners = document.getElementById("genres");
   item.genres.map((genre) => {
     const genreCard = document.createElement("li");
     genreCard.innerHTML = `${genre.name} ,`;
@@ -126,6 +125,7 @@ function drawFullMovie(item) {
   movieContainer.style.backgroundImage = `url(https://image.tmdb.org/t/p/w500/${item.poster_path})`;
   movieContainer.style.backgroundSize = "cover";
 }
+//draw cast
 async function drawCast(items) {
   items?.map((item) => {
     const actorCard = document.createElement("a");
@@ -142,9 +142,10 @@ async function drawCast(items) {
     Cast?.appendChild(actorCard);
   });
 }
-if(localStorage.getItem('email') && localStorage.getItem('password')) {
-  let Fchar =localStorage.getItem('name').split(' ')[0].charAt(0);
-  let Schar =localStorage.getItem('name').split(' ')[1].charAt(0);
-  document.getElementById('signin').innerHTML=`${Fchar}${Schar}`;
-  document.getElementById('signin').setAttribute("class",'borderdPerson');
+//Check if the user is logged in
+if (localStorage.getItem("email") && localStorage.getItem("password")) {
+  let Fchar = localStorage.getItem("name").split(" ")[0].charAt(0);
+  let Schar = localStorage.getItem("name").split(" ")[1].charAt(0);
+  document.getElementById("signin").innerHTML = `${Fchar}${Schar}`;
+  document.getElementById("signin").setAttribute("class", "borderdPerson");
 }

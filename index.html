@@ -8,13 +8,13 @@
     />
     <link rel="stylesheet" href="css/all.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Playwrite+MX:wght@100..400&family=Prata&family=Racing+Sans+One&display=swap"
       rel="stylesheet"
     />
-
     <meta charset="utf-8" />
   </head>
   <body>
@@ -47,16 +47,23 @@
             <li class="nav-item"><a href="">More</a></li>
           </ul>
           <div class="search">
-            <a href="#"><i class="fa-solid fa-plus"></i></a>
-            <select name="" id="lang">
-              <option value="en-US" selected>EN</option>
-              <option value="ar-SA">AR</option>
-            </select>
-            <a href="#"><i class="fa-solid fa-bell"></i></a>
-            <a id="signin"href="signin.html" data-bs-toggle="tooltip" title="sign in!"
-              ><i class="fa-solid fa-user"></i
-            ></a>
-            <div class="searchbar">
+            <div class="IconsBar" id="IconsBar">
+              <a href="#"><i class="fa-solid fa-plus"></i></a>
+              <select name="" id="lang">
+                <option value="en-US" selected>EN</option>
+                <option value="ar-SA">AR</option>
+              </select>
+              <a href="#"><i class="fa-solid fa-bell"></i></a>
+              <a
+                id="signin"
+                href="signin.html"
+                data-bs-toggle="tooltip"
+                title="sign in!"
+                ><i class="fa-solid fa-user"></i
+              ></a>
+            </div>
+
+            <div class="searchbarHeader">
               <input type="text" placeholder="Search" id="search-input" />
               <a href="#" id="searchBarBtn"
                 ><i class="fa-solid fa-magnifying-glass"></i
@@ -83,12 +90,44 @@
               placeholder="Search for movies, tv shows and people"
               id="search-input-main"
             />
-            <button id="searchMainBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button id="searchMainBtn">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
           </div>
         </div>
       </div>
     </main>
-    <section id="Movies-list" class="Movies-list row"></section>
+    <section class="Movies">
+      <aside class="filter" id="filter">
+        <section class="Sort">
+          <h3>Sort:</h3>
+          <div
+            class="Sort d-flex align-items-center justify-content-between"
+            id="SortDiv"
+          >
+            <label for="rate"> Sort :</label>
+            <select name="Sort" id="SortSelect" class="sortSelect">
+              <option value="popularity.desc" selected>Popularity Desc</option>
+              <option value="popularity.asc">Popularity Asc</option>
+              <option value="vote_average.desc">Rating Desc</option>
+              <option value="vote_average.asc">Rating Asc</option>
+              <option value="release_date.desc">Release Date Desc</option>
+              <option value="release_date.asc">Release Date Asc</option>
+              <option value="original_title.asc">Title A-Z</option>
+              <option value="original_title.desc">Title Z-A</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="genersFilter">
+          <h3>Geners</h3>
+          <div class="geners-list" id="geners-list"></div>
+        </section>
+        <button class="searchFilter" id="searchFilter">Search</button>
+      </aside>
+      <section id="Movies-list" class="Movies-list row"></section>
+    </section>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js"></script>
   </body>

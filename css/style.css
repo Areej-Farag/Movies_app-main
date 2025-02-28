@@ -8,15 +8,16 @@
 }
 body {
   background-color: var(--mainColor) !important;
+  overflow-x: hidden;
 }
 img {
   /* position: relative; */
   transition: 0.3s all ease-in-out;
 }
-img:hover {
-  /* z-index: -1; */
+/* img:hover {
+  z-index: -1;
   transform: scale(1.1) rotate(5deg);
-}
+} */
 /* sign in and up */
 .form {
   box-shadow: #c1121e 0px 7px 10px 2px;
@@ -121,7 +122,7 @@ form button:hover {
 .overlay .searchbar button {
   position: absolute;
   color: var(--mainColor);
-  background-color: var(--terColor);
+  background-color: var(--seclight);
   font-size: 1.5rem;
   width: 80px;
   /* padding: 0.5rem; */
@@ -130,6 +131,10 @@ form button:hover {
   right: -1px;
   top: -1px;
 }
+.overlay .searchbar button:hover {
+  background-color: var(--terColor);
+}
+
 /* header elem */
 .header {
   position: sticky;
@@ -150,7 +155,7 @@ form button:hover {
   align-items: center;
   height: 70px;
 }
-.borderdPerson{
+.borderdPerson {
   border: 2px solid var(--mainColor);
   width: 40px;
   height: 40px;
@@ -162,7 +167,7 @@ form button:hover {
   font-size: 15px;
   padding: 5px;
   margin-right: 5px;
- }
+}
 .logo img {
   display: block;
   width: 10%;
@@ -216,7 +221,7 @@ form button:hover {
   justify-content: flex-end;
 }
 
-.header .right {
+.header .IconsBar {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -257,34 +262,82 @@ form button:hover {
 #search-input:focus {
   outline: none;
 }
+.Movies {
+  margin-top: 70px;
+  display: flex;
+}
+.filter {
+  width: 20%;
+  height: 100%;
+  background-color: var(--mainColor);
+  padding: 1rem;
+  border: 1px solid #d3d3d3;
+  border-radius: 7px;
+  margin: 0 10px;
+  box-shadow: #161a1d78 0px 5px 10px 0px;
+}
+aside section:not(:last-child) {
+  margin: 10px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #d3d3d3;
+}
+.genersFilter {
+  width: 100%;
+}
+.genersDiv {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: baseline;
+  /* justify-content: space-between; */
+}
+.sortSelect {
+  width: 80%;
+  border-radius: 5px;
+  background-color: var(--mainColor);
+  border: 1px solid var(--terColor);
+}
+.geners-list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  /* flex-direction: column; */
+  gap: 1rem;
+}
+.genersLabel {
+  cursor: pointer;
+}
+.searchFilter {
+  width: 100%;
+  background-color: var(--seclight);
 
+  border: none;
+  padding: 0.5rem;
+  border-radius: 5px;
+  color: var(--mainColor);
+  font-weight: 700;
+  cursor: pointer;
+}
+.searchFilter:hover {
+  background-color: var(--terColor);
+}
 /* home elem */
 .Movies-list,
 .people-list {
-  margin-top: 70px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
   padding: 1rem;
 }
-/* .person_card {
-    height: 450px !important;
+.Movies-list {
+  width: 80%;
 }
-.person_card img{
-    height: 80% !important;
-    object-fit: fill !important;
-} */
-
 .movie-card,
 .person_card {
-  /* overflow: hidden; */
-  /* background-color: #D3D3D3; */
   color: var(--terColor);
   position: relative;
   text-decoration: none;
   display: flex;
   flex-direction: column;
-  /* padding: 1rem; */
   position: relative;
   margin: 1rem 0;
   height: 500px;
@@ -355,7 +408,11 @@ form button:hover {
   padding: 0 !important;
   margin-bottom: 0.3rem !important;
 }
-
+.movie-card:hover,
+.person_card:hover,
+.movie-label:hover {
+  transform: scale(1.1, 1.1);
+}
 .movie-card .image {
   height: 70%;
   width: 100%;
@@ -384,7 +441,12 @@ img {
   padding: 0.7rem;
 }
 .movie-info h3 {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+}
+.searchbarHeader {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
 }
 .info-container p {
   font-size: 14px;
@@ -407,8 +469,11 @@ img {
   border-radius: 7px;
   border: 1px solid #d3d3d3;
   width: 90%;
+  color: var(--terColor);
+  text-decoration: none;
   box-shadow: #161a1d78 0px 5px 10px 0px;
 }
+
 .movie-label .image {
   width: 20%;
   height: 100%;
@@ -469,7 +534,7 @@ img {
   color: var(--mainColor);
   padding: 2rem;
   display: grid;
-  grid-template-columns: 30% 1fr ;
+  grid-template-columns: 30% 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   width: 100%;
   height: 100%;
@@ -552,18 +617,18 @@ img {
 .itemInfo h3 {
   font-size: 3rem;
 }
-.itemicons{
+.itemicons {
   display: flex;
   flex-direction: column;
   /* align-items: center; */
   grid-row: 2/3;
 }
-.itemOverView{
+.itemOverView {
   grid-row: 3/5;
 }
-.rate-container span{
-  margin: 0 20px 10px 0 ;
-  
+.rate-container span {
+  margin: 0 20px 10px 0;
+
   /* justify-content: space-around; */
 }
 .itemicons .icons i {
@@ -646,89 +711,4 @@ img {
   height: 20%;
   padding: 0;
   font-size: 18px;
-}
-@media screen and (max-width: 768px) {
-  .conta .logo {
-    /* margin: 0; */
-    display: flex !important;
-    justify-content: space-between !important;
-    width: 100% !important;
-  }
-  .conta .logo img {
-    margin: 0 !important;
-  }
-  .conta {
-    height: fit-content !important;
-    /* padding: 1rem !important; */
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    width: 100% !important;
-    background-color: #780000;
-    margin-top: -20px;
-  }
-  .links {
-    padding: 1rem;
-    flex-direction: column;
-  }
-  .search {
-    /* padding: 0.5rem; */
-    margin: 0 !important;
-  }
-  .searchbar {
-    display: none;
-  }
-  .Movies-list,
-  .people-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .movie-label {
-    position: relative;
-    height: 110vh;
-    flex-direction: column;
-  }
-  .movie-label p {
-    font-size: 13px;
-  }
-
-  .movie-label .movie-info {
-    width: 100%;
-  }
-  .movie-label .icons {
-    position: absolute;
-    /* display: flex; */
-    padding: 10px;
-    bottom: 2px;
-  }
-  /* .icons {
-    display: flex;
-    flex-direction: column;
-  } */
- .itemContainer .itemImg{
-  grid-row: 1;
-  grid-column: 1;
- }
-
- .itemContainer .itemicons{
-  grid-column: 1/3;
- }
- .itemContainer .itemOverView , .itemContainer .Biography{
-  grid-column: 1/3;
- }
-
-  .movie-label .image {
-    display: block;
-    width: 100%;
-    height: 40%;
-  }
-  
-  .Biography {
-    position: absolute;
-    bottom: 2px;
-    height: 65%;
-    width: 100%;
-    text-overflow: ellipsis;
-    white-space: wrap;
-    overflow: hidden;
-  }
 }
