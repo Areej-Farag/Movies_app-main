@@ -2,7 +2,7 @@ const apiKey = "210b492d626133d52f8b057ceedfc6b4";
 const lang = document.getElementById("lang");
 let apiUrl = `https://api.themoviedb.org/3/account/21773941/watchlist/tv?language=${lang.value}&page=1&sort_by=created_at.asc&api_key=${apiKey}`;
 const watchlist = document.getElementById("watchlist-list");
-let api = `https://api.themoviedb.org/3/account/21773941/watchlist/tv?language=${lang.value}&page=1&sort_by=created_at.asc&api_key=${apiKey}&session_id=${session_id}`;
+// let api = `https://api.themoviedb.org/3/account/21773941/watchlist/tv?language=${lang.value}&page=1&sort_by=created_at.asc&api_key=${apiKey}&session_id=${session_id}`;
 
 //language handling
 lang.addEventListener("change", () => {
@@ -21,12 +21,11 @@ lang.addEventListener("change", () => {
 });
 
 const options = {
-  method: "GET",
+  method: 'GET',
   headers: {
-    accept: "application/json",
-    Authorization:
-      "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZDZmMDY5MjM1ZWUyZWM1MGMxYTRkMjEwMmE3NmEwMiIsIm5iZiI6MTczNzc5NTEwMC45Njk5OTk4LCJzdWIiOiI2Nzk0YTYxYzVhN2Q4MDczMWQxODdhOWIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.gwUMrmhMs1oJgyN3rZbpg6rkt8gImCDHPUKj3Ops5D0",
-  },
+    accept: 'application/json',
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMTBiNDkyZDYyNjEzM2Q1MmY4YjA1N2NlZWRmYzZiNCIsIm5iZiI6MTczNzc5NTEwMC45Njk5OTk4LCJzdWIiOiI2Nzk0YTYxYzVhN2Q4MDczMWQxODdhOWIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.dBFObEkWSMR4QGEckqxWEKn8rMEalZDPlqUluY1mltY'
+  }
 };
 // function to fetch watchlist
 async function fetchMovies(url, options) {
@@ -35,7 +34,7 @@ async function fetchMovies(url, options) {
   return data;
 }
 // fetch watchlist and draw them
-fetchMovies(api, options).then((res) => drawMovies(res.results));
+fetchMovies(apiUrl, options).then((res) => drawMovies(res.results));
 
 // function to draw Watchlist
 function drawMovies(movies) {
